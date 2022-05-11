@@ -45,11 +45,10 @@ public class KNNModel extends KnowLedgeModel {
   public void predictClassLable(String fileIn, String fileOut) {
     Instances unlabel = loadDataSet(fileIn);
     unlabel.setClassIndex(unlabel.numAttributes() - 1);
-
-    for (int i=0; i<unlabel.numAttributes() - 1 ; i++) {
-      double predict;
+    
+    for (int i=0; i<unlabel.numInstances(); i++) {
       try {
-        predict = knn.classifyInstance(unlabel.instance(i));
+        double predict = knn.classifyInstance(unlabel.instance(i));
         unlabel.instance(i).setClassValue(predict);
       } catch (Exception e) {
         System.out.println("Error prediction");
