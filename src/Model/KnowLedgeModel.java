@@ -3,7 +3,7 @@ package Model;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
-public class KnowLedgeModel {
+public class KnowledgeModel {
   protected Instances dataset;
   protected Instances trainDataset;
   protected Instances testDataset;
@@ -13,7 +13,7 @@ public class KnowLedgeModel {
     TEST
   };
 
-  public KnowLedgeModel(String filename) {
+  public KnowledgeModel(String filename) {
     this.dataset = loadDataSet(filename);
   }
 

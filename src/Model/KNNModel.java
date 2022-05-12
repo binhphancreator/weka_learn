@@ -5,7 +5,7 @@ import weka.core.Instances;
 import weka.classifiers.Evaluation;
 import java.util.Random;
 
-public class KNNModel extends KnowLedgeModel {
+public class KNNModel extends KnowledgeModel {
   private IBk knn;
   private Evaluation evaluation;
 
