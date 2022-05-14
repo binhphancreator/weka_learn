@@ -3,19 +3,23 @@ package Model;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 
-public class KnowledgeModel {
+public abstract class KnowledgeModel {
   protected Instances dataset;
   protected Instances trainDataset;
   protected Instances testDataset;
+  protected Instances unlabelDataset;
 
   public static enum TYPE_DATASET {
     TRAIN,
-    TEST
+    TEST,
+    UNLABEL
   };
 
   public KnowledgeModel(String filename) {
     this.dataset = loadDataSet(filename);
   }
+
+  public KnowledgeModel() {}
 
   public DataSource loadDataSource(String sourceFile) {
     try {
@@ -46,6 +50,9 @@ public class KnowledgeModel {
         case TEST:
           this.testDataset = loadDataSet(filename);
           break;
+        case UNLABEL:
+          this.unlabelDataset = loadDataSet(filename);
+          break;
         default:
           break;
       }
@@ -59,6 +66,17 @@ public class KnowledgeModel {
 
   public String toString() {
     return dataset.toSummaryString();
+  }
+
+  public Instances getDataSet(TYPE_DATASET type) {
+    switch(type) {
+      case TRAIN:
+        return trainDataset;
+      case TEST:
+        return testDataset;
+      default:
+        return unlabelDataset;
+    }
   }
 
 }

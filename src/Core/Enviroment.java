@@ -31,7 +31,8 @@ public class Enviroment {
             br.close();
         }
         catch (FileNotFoundException e) {
-            return;
+            System.out.println("You should create a .env file and copy the contents from the .env.sample file before running the application!!!");
+            throw new RuntimeException("You should create a .env file and copy the contents from the .env.sample file before running the application!!!");
         }
         catch (IOException e) {
             return;
