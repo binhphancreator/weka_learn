@@ -2,6 +2,7 @@ package Model;
 
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
+import weka.filters.Filter;
 
 public abstract class KnowledgeModel {
   protected Instances dataset;
@@ -12,7 +13,8 @@ public abstract class KnowledgeModel {
   public static enum TYPE_DATASET {
     TRAIN,
     TEST,
-    UNLABEL
+    UNLABEL,
+    DEFAULT
   };
 
   public KnowledgeModel(String filename) {
@@ -53,6 +55,9 @@ public abstract class KnowledgeModel {
         case UNLABEL:
           this.unlabelDataset = loadDataSet(filename);
           break;
+        case DEFAULT:
+          this.dataset = loadDataSet(filename);
+          break;
         default:
           break;
       }
@@ -74,9 +79,21 @@ public abstract class KnowledgeModel {
         return trainDataset;
       case TEST:
         return testDataset;
+      case DEFAULT:
+        return dataset;
       default:
         return unlabelDataset;
     }
   }
 
+  public KnowledgeModel applyFilter(Filter filter) {
+    try {
+      filter.setInputFormat(this.dataset);
+      this.dataset = Filter.useFilter(this.dataset, filter);
+      System.out.println(this.dataset.toString());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+    return this;
+  }
 }
